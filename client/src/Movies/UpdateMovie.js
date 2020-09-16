@@ -39,7 +39,7 @@ const UpdateMovie = props => {
         event.preventDefault();
         axios.put(`http://localhost:5000/api/movies/${id}`, movie)
             .then(response => {
-                setMovie(response.data);
+                setMovie(response.data)
                 history.push(`/movies/${id}`);
             })
             .catch(error => console.log(error))
