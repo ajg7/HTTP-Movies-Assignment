@@ -39,7 +39,7 @@ const App = () => {
       </Route>
 
       <Route 
-        exact path="/update-movie:id"
+        exact path="/update-movie/:id"
         render={() =>  <UpdateMovie />}
         >
       </Route>

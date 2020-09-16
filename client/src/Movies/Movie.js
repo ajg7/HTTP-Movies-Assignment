@@ -24,6 +24,10 @@ function Movie({ addToSavedList }) {
       .catch(error => console.log(error))
   }
 
+  const changeHandler = event => {
+    history.push(`/update-movie/${movie.id}`)
+  }
+
   const saveMovie = () => {
     addToSavedList(movie);
   };
@@ -43,6 +47,7 @@ function Movie({ addToSavedList }) {
       <div className="save-button">
         <button onClick={saveMovie}>Save</button>
       </div>
+      <button onClick={changeHandler}>Update Movie</button>
       <button onClick={deleteHandler}>Delete</button>
     </div>
   );
