@@ -36,7 +36,13 @@ const UpdateMovie = props => {
     }
 
     const submitHandler = event => {
-
+        event.preventDefault();
+        axios.put(`http://localhost:5000/api/movies/${id}`, movie)
+            .then(response => {
+                setMovie(response.data);
+                history.push(`/movies/${id}`);
+            })
+            .catch(error => console.log(error))
     }
 
 
@@ -44,37 +50,37 @@ const UpdateMovie = props => {
     return(
         <>
             <h2>Update Movie</h2>
-            <form onSubmit={}>
+            <form onSubmit={submitHandler}>
                 <label> Title: 
                     <input 
                     name="title"
                     type="text"
-                    value=""
-                    onChange={}
+                    value={movie.title}
+                    onChange={changeHandler}
                     />
                 </label>
                 <label> Director: 
                     <input 
                     name="director"
                     type="text"
-                    value=""
-                    onChange={}
+                    value={movie.director}
+                    onChange={changeHandler}
                     />
                 </label>
                 <label> Metascore: 
                     <input 
                     name="metascore"
                     type="text"
-                    value=""
-                    onChange={}
+                    value={movie.metascore}
+                    onChange={changeHandler}
                     />
                 </label>
                 <label> Stars: 
                     <input 
                     name="stars"
                     type="text"
-                    value=""
-                    onChange={}
+                    value={movie.stars}
+                    onChange={changeHandler}
                     />
                 </label>
                 <button>Update</button>
