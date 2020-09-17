@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 
-const UpdateMovie = props => {
+const UpdateMovie = ({ movieList, setMovieList }) => {
     const initialMovieValues = {
         title: "",
         director: "",
@@ -15,23 +15,15 @@ const UpdateMovie = props => {
     const { id } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/movie/${id}`)
+        axios.get(`http://localhost:5000/api/movies/${id}`)
             .then(response => setMovie(response.data))
             .catch(error => console.log(error));
     }, [id])
 
     const changeHandler = event => {
-        event.persist();
-        let value = event.target.value
-        if (event.target.name === "metascore") {
-            value = parseInt(value, 10)
-        }
-        if (event.target.name === "stars") {
-            value = value.split(",");
-        }
         setMovie({
             ...movie,
-            [event.target.name]: value
+            [event.target.name]: event.target.value
         })
     }
 
@@ -39,8 +31,14 @@ const UpdateMovie = props => {
         event.preventDefault();
         axios.put(`http://localhost:5000/api/movies/${id}`, movie)
             .then(response => {
-                setMovie(response.data)
-                history.push(`/movies/${id}`);
+                setMovieList(movieList.map(movie => {
+                    if(movie.id === id) {
+                        return response.data;
+                    } else {
+                        return movie;
+                    }
+                }))
+                history.push("/");
             })
             .catch(error => console.log(error))
     }

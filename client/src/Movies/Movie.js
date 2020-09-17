@@ -3,10 +3,11 @@ import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import MovieCard from "./MovieCard";
 
-function Movie({ addToSavedList }) {
+function Movie({ addToSavedList, deleteMovie }) {
   const [movie, setMovie] = useState(null);
   const params = useParams();
   const history = useHistory();
+
 
   const fetchMovie = (id) => {
     axios
@@ -19,7 +20,10 @@ function Movie({ addToSavedList }) {
     event.preventDefault();
     axios.delete(`http://localhost:5000/api/movies/${movie.id}`)
       .then(response => {
+        console.log(response.data)
+        setMovie(null);
         history.push("/")
+        deleteMovie(movie.id)
       })
       .catch(error => console.log(error))
   }
